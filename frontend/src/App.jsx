@@ -3,7 +3,7 @@ import "./App.css";
 import Landing from "./pages/landing";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://n-shop-0pqs.onrender.com";
 axios.defaults.withCredentials = true;
 
 function App() {
