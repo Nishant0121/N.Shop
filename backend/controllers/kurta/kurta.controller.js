@@ -18,3 +18,20 @@ export const getKurtasByColor = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+export const getKurtas = async (req, res) => {
+  try {
+    const products = await Kurtas.find();
+
+    if (!products) {
+      return res
+        .status(404)
+        .json({ message: "No products found with that color" });
+    }
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server kurta Error" });
+  }
+};

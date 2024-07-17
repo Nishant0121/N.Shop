@@ -1,6 +1,7 @@
 import express from "express";
 import productRouter from "./routers/products.js";
 import dotenv from "dotenv";
+import cors from "cors";
 import connectDB from "./db/mongo.js";
 
 dotenv.config();
@@ -10,6 +11,12 @@ const port = process.env.PORT || 5000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:5173", // Replace with your frontend's actual origin
+  })
+);
 
 // test router
 
