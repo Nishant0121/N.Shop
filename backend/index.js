@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "https://n-shop-lyart.vercel.app/", // Replace with your frontend's actual origin
+    origin: "https://n-shop-lyart.vercel.app", // Replace with your frontend's actual origin
   })
 );
 
