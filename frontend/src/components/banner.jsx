@@ -1,7 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import { useContext } from "react";
+import { AuthContext } from "../context/user.contex.jsx";
 
 export default function Banner() {
+  const { authUser } = useContext(AuthContext);
+
   const pro = {
     _id: "669538fb6151682ef47ae05b",
     image:
@@ -76,9 +82,12 @@ export default function Banner() {
           <p className="py-6">
             Curated collection with 7,000+ apparel items from 1,000+ brands
           </p>
-          <button className="btn text-black border-none bg-primary">
+          <Link
+            to={authUser ? "/home" : "/login"}
+            className="p-2 px-3 rounded-xl text-black border-none bg-primary"
+          >
             Get Started
-          </button>
+          </Link>
           <div className="grid items-start md:w-[70%] mt-4 grid-cols-3">
             <div className="flex flex-col items-center justify-center">
               <span className=" text-2xl">700+</span>

@@ -1,5 +1,6 @@
 import express from "express";
 import productRouter from "./routers/products.js";
+import userRouter from "./routers/user.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./db/mongo.js";
@@ -14,7 +15,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "https://n-shop-lyart.vercel.app/", // Replace with your frontend's actual origin
+    origin: "https://n-shop-lyart.vercel.app", // Replace with your frontend's actual origin
   })
 );
 
@@ -27,6 +28,8 @@ app.get("/", (req, res) => {
 // Use the router
 
 app.use("/api/product", productRouter);
+
+app.use("/api/user", userRouter);
 
 // Start the server
 app.listen(port, () => {
