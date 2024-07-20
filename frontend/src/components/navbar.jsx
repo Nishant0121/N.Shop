@@ -14,10 +14,7 @@ export default function Navbar() {
         </div>
         <div className="text-3xl font-bold mx-2">N.Shop</div>
       </div>
-      <Link
-        to={authUser ? "/home" : "/login"}
-        className=" px-3 py-2 rounded-full bg-primary"
-      >
+      <Link to={"/home"} className=" px-3 py-2 rounded-full bg-primary">
         Start Shoping
       </Link>
     </nav>

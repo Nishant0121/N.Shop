@@ -83,7 +83,7 @@ export default function Banner() {
             Curated collection with 7,000+ apparel items from 1,000+ brands
           </p>
           <Link
-            to={authUser ? "/home" : "/login"}
+            to={"/home"}
             className="p-2 px-3 rounded-xl text-black border-none bg-primary"
           >
             Get Started
