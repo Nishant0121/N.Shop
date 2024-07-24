@@ -12,6 +12,7 @@ import {
   getGown,
   getGownsByColor,
 } from "../controllers/gown/gown.controller.js";
+import { getShirt } from "../controllers/shirt/shirt.controller.js";
 
 const router = express.Router();
 
@@ -24,6 +25,8 @@ router.get("/gown/color/:color", getGownsByColor);
 router.get("/type/kurta", getKurtas);
 
 router.get("/type/gown", getGown);
+
+router.get("/type/shirt", getShirt);
 
 router.get("/kurta/color/:color", getKurtasByColor);
 

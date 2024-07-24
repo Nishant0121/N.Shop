@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function DisProduct() {
+export default function ProductPic() {
   const discount = 80;
   const [products, setProducts] = useState([]);
 
@@ -18,27 +18,18 @@ export default function DisProduct() {
   }, []);
 
   return (
-    <div>
-      <h1 className=" text-xl font-semibold m-2">Top Sellers</h1>
-      <div className="flex overflow-x-auto space-x-4">
+    <div className="flex overflow-x-auto rounded-lg mt-4 shadow-md border-t">
+      <div className="flex space-x-4 max-w-[1000px] h-fit rounded-lg ">
         {products.slice(0, 7).map((product, index) => (
           <div
             key={index}
-            className="relative rounded-lg shadow-md h-[170px] md:h-[220px] w-[130px] md:w-[170px] flex-shrink-0"
+            className="flex-shrink-0  w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/5"
           >
             <img
-              className="object-scale-down h-full w-full"
+              className="h-[200px] md:h-[300px] w-full object-cover rounded-lg"
               src={product.image} // Assuming 'image' is the correct field name for the product image
               alt={product.title} // Assuming 'title' is the correct field name for the product title
             />
-            <div className="absolute bottom-0 w-full bg-blue-gray-300 rounded-b-lg p-2">
-              <h1 className="text-lg">{product.brand}</h1>
-              <div>
-                <p className="font-normal bg-primary py-1 text-center px-2 rounded-full">
-                  {product.disscount}
-                </p>
-              </div>
-            </div>
           </div>
         ))}
       </div>

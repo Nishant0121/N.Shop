@@ -4,9 +4,11 @@ import Landing from "./pages/landing";
 import axios from "axios";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import Home from "./pages/home.jsx";
+import Home from "./pages/home";
 import { useContext } from "react";
 import { AuthContext } from "./context/user.contex.jsx";
+import Layout from "./layout.jsx";
+import Products from "./pages/products.jsx";
 
 axios.defaults.baseURL = "https://n-shop-0pqs.onrender.com";
 axios.defaults.withCredentials = true;
@@ -15,14 +17,28 @@ function App() {
   const { authUser } = useContext(AuthContext);
 
   return (
-    <div className=" bg-white text-black">
+    <div className="bg-white text-black">
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/about" element={<h1>About</h1>} />
         <Route
           path="/home"
-          element={authUser ? <Home /> : <Navigate to={"/login"} />}
-        />
+          element={authUser ? <Layout /> : <Navigate to={"/login"} />}
+        >
+          <Route index element={<Home />} />
+        </Route>
+        <Route
+          path="/about"
+          element={authUser ? <Layout /> : <Navigate to={"/login"} />}
+        >
+          <Route index element={<h1>About</h1>} />
+        </Route>
+        <Route
+          path="/products"
+          element={authUser ? <Layout /> : <Navigate to={"/login"} />}
+        >
+          <Route index element={<Products />} />
+        </Route>
+
         <Route
           path="/login"
           element={authUser ? <Navigate to={"/home"} /> : <Login />}

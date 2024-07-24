@@ -1,5 +1,4 @@
 import Gowns from "../../model/gown.model.js";
-import Kurtas from "../../model/kurta.model.js";
 
 export const getGownsByColor = async (req, res) => {
   const { color } = req.params; // Assuming color is passed as a URL parameter

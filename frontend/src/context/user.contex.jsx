@@ -12,8 +12,11 @@ export const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(
     JSON.parse(localStorage.getItem("n.shop-user-info")) || null
   );
+  const [activeLink, setActiveLink] = useState("/home");
   return (
-    <AuthContext.Provider value={{ authUser, setAuthUser }}>
+    <AuthContext.Provider
+      value={{ authUser, setAuthUser, activeLink, setActiveLink }}
+    >
       {children}
     </AuthContext.Provider>
   );
