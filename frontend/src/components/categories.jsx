@@ -12,7 +12,7 @@ export default function Categories() {
   };
 
   return (
-    <div className=" w-full mt-3">
+    <div className=" max-w-[1000px] mt-3">
       <div className=" text-lg font-semibold">Shop With Categories</div>
       <div className=" mt-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5  gap-3">
         <div className="max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden">

@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/user.contex";
+import { AuthContext } from "../context/user.contex.jsx";
 
 export default function Header() {
   // State to keep track of the active link
-  const { activeLink, setActiveLink } = useContext(AuthContext);
+  const { activeLink, setActiveLink, authUser } = useContext(AuthContext);
+  const profilepic = "https://avatar.iran.liara.run/public";
 
   // Function to handle the link click and set the active link
   const handleLinkClick = (path) => {
@@ -18,7 +19,7 @@ export default function Header() {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 p-0">
-          <li className="hidden md:grid grid-cols-4 gap-2">
+          <li className="hidden md:grid grid-cols-5 gap-2">
             <Link
               to="/home"
               className={`p-0 px-2.5 py-1.5 hover:bg-primary rounded-none flex items-center justify-center ${
@@ -52,20 +53,77 @@ export default function Header() {
             >
               Products
             </Link>
-            <div
+            <Link
               className={`p-0 px-2.5 py-1.5 hover:bg-primary rounded-none flex items-center justify-center ${
                 activeLink === "/contact"
                   ? "border-b-4 hover:bg-white hover:text-black border-primary"
                   : ""
               }`}
+              onClick={() => handleLinkClick("/contact")}
             >
               Contact
-            </div>
+            </Link>
+            <Link
+              to={"/account"}
+              className={` bg-primary border-2 rounded-full px-1 py-1 ${
+                activeLink === "/account" ? "border-primary" : ""
+              }`}
+              onClick={() => {
+                handleLinkClick("/account");
+              }}
+            >
+              {authUser ? (
+                <div className="flex items-center">
+                  <img
+                    className="h-8 w-8 rounded-full border "
+                    src={profilepic}
+                    alt="Profile"
+                  />
+                  <h1 className="ml-2">{authUser.username}</h1>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="p-0 px-2.5 py-1.5 hover:bg-primary rounded-none flex items-center justify-center"
+                >
+                  Login
+                </Link>
+              )}
+            </Link>
           </li>
           <li className="flex md:hidden">
             <details>
               <summary>Menu</summary>
-              <ul className="bg-white shadow-md rounded-t-none p-2">
+              <ul className="bg-white mt-0 shadow-md rounded-t-none p-2">
+                <li>
+                  <Link
+                    to={"/account"}
+                    className={` bg-primary border-2 rounded-full px-1 py-1 ${
+                      activeLink === "/account" ? "border-primary" : ""
+                    }`}
+                    onClick={() => {
+                      handleLinkClick("/account");
+                    }}
+                  >
+                    {authUser ? (
+                      <div className="flex items-center">
+                        <img
+                          className="h-8 w-8 rounded-full border "
+                          src={profilepic}
+                          alt="Profile"
+                        />
+                        <h1 className="ml-2">{authUser.username}</h1>
+                      </div>
+                    ) : (
+                      <Link
+                        to="/login"
+                        className="p-0 px-2.5 py-1.5 hover:bg-primary rounded-none flex items-center justify-center"
+                      >
+                        Login
+                      </Link>
+                    )}
+                  </Link>
+                </li>
                 <li>
                   <Link
                     to="/home"
@@ -106,15 +164,16 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <div
+                  <Link
                     className={`p-0 px-2.5 py-1.5 hover:bg-primary rounded-none flex items-center justify-center ${
                       activeLink === "/contact"
                         ? "border-b-4 hover:bg-white hover:text-black border-primary"
                         : ""
                     }`}
+                    onClick={() => handleLinkClick("/contact")}
                   >
                     Contact
-                  </div>
+                  </Link>
                 </li>
               </ul>
             </details>

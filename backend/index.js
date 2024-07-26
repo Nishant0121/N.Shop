@@ -1,6 +1,7 @@
 import express from "express";
 import productRouter from "./routers/products.js";
 import userRouter from "./routers/user.js";
+import interaction from "./routers/interaction.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./db/mongo.js";
@@ -30,6 +31,8 @@ app.get("/", (req, res) => {
 app.use("/api/product", productRouter);
 
 app.use("/api/user", userRouter);
+
+app.use("/api/interaction", interaction);
 
 // Start the server
 app.listen(port, () => {

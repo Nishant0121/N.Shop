@@ -49,39 +49,41 @@ export default function Products() {
   return (
     <div className="min-h-screen max-w-[1000px] mx-auto flex flex-col items-center">
       {/* Category Selector */}
-      <div className="flex justify-center items-center space-x-4 mt-4 mb-4">
-        <button
-          onClick={() => handleCategoryChange("all")}
-          className={`${
-            category === "all" ? "bg-blue-500" : "bg-gray-300"
-          } px-4 py-2 rounded`}
-        >
-          All
-        </button>
-        <button
-          onClick={() => handleCategoryChange("kurtas")}
-          className={`${
-            category === "kurtas" ? "bg-blue-500" : "bg-gray-300"
-          } px-4 py-2 rounded`}
-        >
-          Kurtas
-        </button>
-        <button
-          onClick={() => handleCategoryChange("gowns")}
-          className={`${
-            category === "gowns" ? "bg-blue-500" : "bg-gray-300"
-          } px-4 py-2 rounded`}
-        >
-          Gowns
-        </button>
-        <button
-          onClick={() => handleCategoryChange("shirts")}
-          className={`${
-            category === "shirts" ? "bg-blue-500" : "bg-gray-300"
-          } px-4 py-2 rounded`}
-        >
-          Shirts
-        </button>
+      <div className="flex justify-center items-center space-x-4 overflow-x-auto mt-4 mb-4 w-full">
+        <div className="flex space-x-4 px-4">
+          <button
+            onClick={() => handleCategoryChange("all")}
+            className={`${
+              category === "all" ? "bg-blue-500" : "bg-gray-300"
+            } px-4 py-2 rounded`}
+          >
+            All
+          </button>
+          <button
+            onClick={() => handleCategoryChange("kurtas")}
+            className={`${
+              category === "kurtas" ? "bg-blue-500" : "bg-gray-300"
+            } px-4 py-2 rounded`}
+          >
+            Kurtas
+          </button>
+          <button
+            onClick={() => handleCategoryChange("gowns")}
+            className={`${
+              category === "gowns" ? "bg-blue-500" : "bg-gray-300"
+            } px-4 py-2 rounded`}
+          >
+            Gowns
+          </button>
+          <button
+            onClick={() => handleCategoryChange("shirts")}
+            className={`${
+              category === "shirts" ? "bg-blue-500" : "bg-gray-300"
+            } px-4 py-2 rounded`}
+          >
+            Shirts
+          </button>
+        </div>
       </div>
 
       {/* Products */}
@@ -96,20 +98,22 @@ export default function Products() {
       )}
 
       {/* Pagination */}
-      <div className="flex justify-center mt-4 mb-4">
-        {Array.from({
-          length: Math.ceil(products.length / productsPerPage),
-        }).map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrentPage(i + 1)}
-            className={`px-2 py-1 mx-1 rounded ${
-              currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-300"
-            }`}
-          >
-            {i + 1}
-          </button>
-        ))}
+      <div className="flex justify-center overflow-x-auto mt-4 mb-4 w-full">
+        <div className="flex space-x-2 px-4">
+          {Array.from({
+            length: Math.ceil(products.length / productsPerPage),
+          }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`px-2 py-1 mx-1 rounded ${
+                currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-300"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,9 @@ import { useContext } from "react";
 import { AuthContext } from "./context/user.contex.jsx";
 import Layout from "./layout.jsx";
 import Products from "./pages/products.jsx";
+import Account from "./pages/account.jsx";
+import Product from "./components/productinfo.jsx";
+import { Toaster } from "react-hot-toast";
 
 axios.defaults.baseURL = "https://n-shop-0pqs.onrender.com";
 axios.defaults.withCredentials = true;
@@ -40,6 +43,20 @@ function App() {
         </Route>
 
         <Route
+          path="/account"
+          element={authUser ? <Layout /> : <Navigate to={"/login"} />}
+        >
+          <Route index element={<Account />} />
+        </Route>
+
+        <Route
+          path="/product/:productId"
+          element={authUser ? <Layout /> : <Navigate to={"/login"} />}
+        >
+          <Route index element={<Product />} />
+        </Route>
+
+        <Route
           path="/login"
           element={authUser ? <Navigate to={"/home"} /> : <Login />}
         />
@@ -48,6 +65,7 @@ function App() {
           element={authUser ? <Navigate to={"/home"} /> : <Register />}
         />
       </Routes>
+      <Toaster />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 
+import { Link } from "react-router-dom";
+
 export default function ProductCard({ product }) {
   // Truncate a string to a specified length and append ellipsis if necessary
   function truncateString(str, num) {
@@ -14,7 +16,10 @@ export default function ProductCard({ product }) {
   const title = truncateString(product.title, 25);
 
   return (
-    <div className="w-full h-[250px] md:h-[300px] relative max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <Link
+      to={`/product/${product._id}`}
+      className="w-full h-[250px] md:h-[300px] relative max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
       <div>
         <img
           className="p-2 h-[200px] md:h-[250px] w-full object-cover rounded-lg"
@@ -32,14 +37,14 @@ export default function ProductCard({ product }) {
           <span className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
             {product.price}
           </span>
-          <button
+          <div
             onClick={() => alert("Added to cart")} // Use onClick for button actions
             className="text-white rounded-lg px-2 py-2 bg-primary hover:bg-primary-dark focus:ring-4 focus:outline-none focus:ring-primary-300"
           >
             Add Cart
-          </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
