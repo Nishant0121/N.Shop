@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/user.contex.jsx"; // Ensure you have AuthContext set up
 import toast from "react-hot-toast";
 
@@ -17,6 +17,7 @@ export default function Product() {
   const [quantity, setQantity] = useState(1);
   const { productId } = useParams();
   const { authUser } = useContext(AuthContext); // Assuming you have an AuthContext that provides user info
+  const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -60,7 +61,7 @@ export default function Product() {
     }
   };
 
-  const handleBuyNow = async () => {
+  const handleBuyNow = () => {
     if (!authUser) {
       toast.error("You need to log in to place an order");
       return;
@@ -80,7 +81,7 @@ export default function Product() {
           price: price,
         },
       ],
-      totalAmount: price,
+      totalAmount: price * quantity,
       paymentMethod: "UPI", // You can change this based on your actual payment method
       shippingAddress: {
         street: "123 Main Street",
@@ -91,13 +92,7 @@ export default function Product() {
       },
     };
 
-    try {
-      await axios.post("/api/interaction/createorder", orderData);
-      toast.success("Order placed successfully!");
-    } catch (error) {
-      console.error("Error placing order:", error);
-      toast.error("Failed to place order");
-    }
+    navigate("/ordersummary", { state: { orderData } });
   };
 
   const handelQuantityIncrease = () => {
