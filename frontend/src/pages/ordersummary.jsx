@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { AuthContext } from "../context/user.contex.jsx";
 import { initializeCashfree } from "../cashfree/util.js"; // Update import
 import axios from "axios";
@@ -11,14 +11,14 @@ export default function OrderSummary() {
   const [address, setAddress] = useState(orderData?.shippingAddress || {});
   const [phoneNumber, setPhoneNumber] = useState("");
   const { authUser } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [sessionID, setSessionID] = useState("");
-  const [error, setError] = useState("");
+  const [, setError] = useState("");
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleGetId = useCallback(async () => {
     if (!authUser) {
       toast.error("You need to log in to proceed with the payment");
@@ -29,7 +29,7 @@ export default function OrderSummary() {
       const res = await axios.post("/api/interaction/payment/orderID", {
         customer_email: authUser.email,
         customer_phone: phoneNumber,
-        customer_name: authUser.name,
+        customer_name: authUser.username,
         order_amount: orderData.totalAmount,
       });
       setSessionID(res.data.payment_session_id);
@@ -116,92 +116,102 @@ export default function OrderSummary() {
   console.log(sessionID);
 
   return (
-    <div className="min-h-[100vh] p-5">
-      <h1 className="text-2xl font-bold mb-5">Order Summary</h1>
-      <h2 className="text-xl font-semibold mb-5">Order Details</h2>
-      {loading ? (
-        <div className="flex items-center justify-center min-h-[100vh]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
-        </div>
-      ) : (
-        products.map((product, index) => {
-          const item = orderData.items.find((i) => i.productId === product._id);
-          return (
-            <div
-              key={index}
-              className="mb-5 p-5 grid grid-cols-2 gap-3 border rounded bg-white"
-            >
-              <img
-                className="w-full h-56 object-scale-down mb-3"
-                src={product.imageUrl ? product.imageUrl : product.image}
-                alt={product.title}
-              />
-              <div className="">
-                <h3 className="text-lg font-semibold">{product.title}</h3>
-                <p>Brand: {product.brand}</p>
-                <p>Quantity: {item.quantity}</p>
-                <p>Price: ₹{item.price}</p>
-              </div>
+    <div className="min-h-[100vh] p-2">
+      <h1 className="text-3xl font-bold mb-2">Order Summary</h1>
+      <div className=" p-2 grid grid-cols-1 md:grid-cols-2 gap-3 rounded bg-white">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="mb-5">
+            <h2 className=" font-semibold">Shipping Address</h2>
+            <textarea
+              className="w-full border bg-white rounded p-2"
+              value={address.street}
+              onChange={(e) =>
+                setAddress({ ...address, street: e.target.value })
+              }
+              placeholder="Street"
+            />
+            <input
+              className="w-full border bg-white rounded p-2 mt-2"
+              value={address.city}
+              onChange={(e) => setAddress({ ...address, city: e.target.value })}
+              placeholder="City"
+            />
+            <input
+              className="w-full border bg-white rounded p-2 mt-2"
+              value={address.state}
+              onChange={(e) =>
+                setAddress({ ...address, state: e.target.value })
+              }
+              placeholder="State"
+            />
+            <input
+              className="w-full border bg-white rounded p-2 mt-2"
+              value={address.postalCode}
+              onChange={(e) =>
+                setAddress({ ...address, postalCode: e.target.value })
+              }
+              placeholder="Postal Code"
+            />
+            <input
+              className="w-full border bg-white rounded p-2 mt-2"
+              value={address.country}
+              onChange={(e) =>
+                setAddress({ ...address, country: e.target.value })
+              }
+              placeholder="Country"
+            />
+          </div>
+          <div className="mb-5">
+            <h2 className=" font-semibold">Phone Number</h2>
+            <input
+              className="w-full border bg-white rounded p-2"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              placeholder="Phone Number"
+            />
+            <div className="flex flex-col items-start justify-between mt-5">
+              <h2 className="text-xl font-semibold mb-1 ">Payment Details</h2>
+              <h2 className="text-lg ">
+                Total Amount: ₹{orderData.totalAmount}
+              </h2>
             </div>
-          );
-        })
-      )}
-
-      <div className="flex items-center justify-between mt-5">
-        <h2 className="text-xl font-bold">
-          Total Amount: ₹{orderData.totalAmount}
-        </h2>
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        <div className="mb-5">
-          <h2 className="text-xl font-semibold">Shipping Address</h2>
-          <textarea
-            className="w-full border bg-white rounded p-2"
-            value={address.street}
-            onChange={(e) => setAddress({ ...address, street: e.target.value })}
-            placeholder="Street"
-          />
-          <input
-            className="w-full border bg-white rounded p-2 mt-2"
-            value={address.city}
-            onChange={(e) => setAddress({ ...address, city: e.target.value })}
-            placeholder="City"
-          />
-          <input
-            className="w-full border bg-white rounded p-2 mt-2"
-            value={address.state}
-            onChange={(e) => setAddress({ ...address, state: e.target.value })}
-            placeholder="State"
-          />
-          <input
-            className="w-full border bg-white rounded p-2 mt-2"
-            value={address.postalCode}
-            onChange={(e) =>
-              setAddress({ ...address, postalCode: e.target.value })
-            }
-            placeholder="Postal Code"
-          />
-          <input
-            className="w-full border bg-white rounded p-2 mt-2"
-            value={address.country}
-            onChange={(e) =>
-              setAddress({ ...address, country: e.target.value })
-            }
-            placeholder="Country"
-          />
+          </div>
         </div>
-        <div className="mb-5">
-          <h2 className="text-xl font-semibold">Phone Number</h2>
-          <input
-            className="w-full border bg-white rounded p-2"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            placeholder="Phone Number"
-          />
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-center min-h-[100vh]">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+          </div>
+        ) : (
+          products.map((product, index) => {
+            const item = orderData.items.find(
+              (i) => i.productId === product._id
+            );
+            return (
+              <div
+                key={index}
+                className="mb-5 p-5 border-l-primary md:border-4 border-0 md:border-y-0 md:border-r-0 bg-white"
+              >
+                <img
+                  className="w-full h-56 object-scale-down mb-3"
+                  src={product.imageUrl ? product.imageUrl : product.image}
+                  alt={product.title}
+                />
+                <div className="">
+                  <h3 className="text-lg font-semibold">{product.title}</h3>
+                  <p>Brand: {product.brand}</p>
+                  <p>Quantity: {item.quantity}</p>
+                  <p>
+                    Price: ₹{item.price}
+                    {item.quantity > 1 ? "(Per Piece)" : ""}
+                  </p>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
-      <div className="flex items-center justify-center mt-5">
+      <div className="flex items-center justify-center ">
         <button
           className="bg-blue-500 w-full hover:bg-blue-700 text-white my-3 font-bold py-2 px-4 rounded"
           onClick={handlePlaceOrder}
