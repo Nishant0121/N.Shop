@@ -39,8 +39,8 @@ export default function OrderSummary() {
     }
   });
 
-  const handelPayment = () => {
-    const cashfree = initializeCashfree();
+  const handelPayment = async () => {
+    const cashfree = await initializeCashfree();
     let checkoutOptions = {
       paymentSessionId: sessionID,
       returnUrl: `https://n-shop-lyart.vercel.app/payment/{order_id}`,

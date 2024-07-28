@@ -1,5 +1,4 @@
 import { load } from "@cashfreepayments/cashfree-js";
-
 let cashfreeInstance = null;
 
 export const initializeCashfree = async () => {
