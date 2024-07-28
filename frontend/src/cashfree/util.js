@@ -1,6 +1,12 @@
 import { load } from "@cashfreepayments/cashfree-js";
-const cashfree = load({
-  mode: "sandbox", //or production
-});
 
-export default cashfree;
+let cashfreeInstance = null;
+
+export const initializeCashfree = async () => {
+  if (!cashfreeInstance) {
+    cashfreeInstance = await load({
+      mode: "sandbox", // or "production"
+    });
+  }
+  return cashfreeInstance;
+};

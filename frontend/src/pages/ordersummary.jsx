@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/user.contex.jsx";
-import cashfree from "../cashfree/util.js";
+import { initializeCashfree } from "../cashfree/util.js"; // Update import
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -40,6 +40,7 @@ export default function OrderSummary() {
   });
 
   const handelPayment = () => {
+    const cashfree = initializeCashfree();
     let checkoutOptions = {
       paymentSessionId: sessionID,
       returnUrl: `https://n-shop-lyart.vercel.app/payment/{order_id}`,
