@@ -35,7 +35,12 @@ export default function ProductCard({ product }) {
         </div>
         <div className="flex items-center justify-between mt-2">
           <span className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
-            {product.price}
+            {product.discountedPrice
+              ? `${product.discountedPrice}`
+              : `${product.selling_price}`}
+            <h1 className=" line-through  text-sm text-gray-700">
+              {product.price}
+            </h1>
           </span>
           <div
             onClick={() => alert("Added to cart")} // Use onClick for button actions

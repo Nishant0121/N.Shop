@@ -44,8 +44,8 @@ export default function Product() {
 
     const price =
       typeof product.price === "string"
-        ? extractNumericValue(product.price)
-        : product.price;
+        ? extractNumericValue(product.discountedPrice || product.selling_price)
+        : product.discountedPrice || product.selling_price;
 
     try {
       await axios.post("/api/interaction/addtocart", {
@@ -59,6 +59,8 @@ export default function Product() {
       console.error("Error adding to cart:", error);
       toast.error("Failed to add to cart");
     }
+
+    console.log(price);
   };
 
   const handleBuyNow = () => {
@@ -69,8 +71,8 @@ export default function Product() {
 
     const price =
       typeof product.price === "string"
-        ? extractNumericValue(product.price)
-        : product.price;
+        ? extractNumericValue(product.discountedPrice || product.selling_price)
+        : product.discountedPrice || product.selling_price;
 
     const orderData = {
       userId: authUser._id,
@@ -121,7 +123,7 @@ export default function Product() {
   }
 
   return (
-    <div className="min-h-[100vh] gap-3 grid grid-cols-1 md:grid-cols-2">
+    <div className="min-h-[100vh] max-w-[1000px] mx-auto grid grid-cols-1 gap-4 md:grid-cols-2">
       <div className="flex items-center justify-center">
         <img
           className="rounded-lg"
@@ -129,15 +131,25 @@ export default function Product() {
           alt={product.title}
         />
       </div>
-      <div className="mt-5">
+      <div className="mt-5 flex flex-col items-start justify-center">
         <h1 className="text-start text-xl my-3 font-bold">{product.brand}</h1>
         <h1 className="text-start text-3xl my-3 font-bold">{product.title}</h1>
         <h1 className="text-start text-2xl my-3 font-bold">
           {typeof product.price === "number" ? (
-            <span>₹{product.price}</span>
+            <span>
+              ₹
+              {product.discountedPrice
+                ? `${product.discountedPrice}`
+                : `${product.selling_price}`}
+            </span>
+          ) : product.discountedPrice ? (
+            `${product.discountedPrice}`
           ) : (
-            product.price
+            `${product.selling_price}`
           )}
+          <h1 className=" line-through  text-sm text-gray-700">
+            {product.price}
+          </h1>
         </h1>
         <div className="w-full border-2 my-3 rounded-full border-gray-400"></div>
         <h className="ml-3 mb-2 ">Quantity</h>
@@ -156,7 +168,7 @@ export default function Product() {
             +
           </button>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex w-full items-center justify-center">
           <button
             className="bg-primary w-full hover:bg-primary-dark text-black my-3 font-bold py-2 px-4 rounded"
             onClick={handleAddToCart}
@@ -164,7 +176,7 @@ export default function Product() {
             Add to Cart
           </button>
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex w-full items-center justify-center">
           <button
             className="bg-blue-500 w-full hover:bg-blue-700 text-white my-3 font-bold py-2 px-4 rounded"
             onClick={handleBuyNow}
