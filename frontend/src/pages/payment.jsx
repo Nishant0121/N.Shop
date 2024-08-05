@@ -2,21 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { jsPDF } from "jspdf";
-import Lottie from "react-lottie";
-import payment from "../assets/pay_t.json";
+import payment from "../assets/payment.png";
 
 export default function Profile() {
   const { order_id } = useParams();
   const [order, setOrder] = useState("");
-
-  const defaultOptions = {
-    loop: false,
-    autoplay: false,
-    animationData: payment,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
 
   useEffect(() => {
     const CheckStatus = async () => {
@@ -53,8 +43,8 @@ export default function Profile() {
           : "Failure"}
         <div className=" flex items-center justify-center flex-col">
           Your Payment Is Sucessifull {order_id}
-          {/* <img className="w-[300px]" src={sucess} alt="" srcSet="" /> */}
-          <Lottie options={defaultOptions} height={300} width={300} />
+          <img className="w-[300px]" src={payment} alt="" srcSet="" />
+          {/* <Lottie options={defaultOptions} height={300} width={300} /> */}
         </div>
         <button onClick={generatePDF}>Download Receipt</button>
       </div>
