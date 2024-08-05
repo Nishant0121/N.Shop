@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import Lottie from "react-lottie";
-import payment from "../assets/payment.json";
+import payment from "../assets/pay_t.json";
 
 export default function Profile() {
   const { order_id } = useParams();
